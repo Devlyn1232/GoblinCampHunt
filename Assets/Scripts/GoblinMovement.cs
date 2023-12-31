@@ -73,4 +73,28 @@ public class GoblinMovement : MonoBehaviour
             
         }
     }
+
+    public void dashAndLookAtPlayer()
+    {
+        StartCoroutine(DLAP());
+    }
+    public IEnumerator DLAP()
+    {
+        R.AttackMode = true;
+        Vector3 targetDirection = R.FindClosestEnemy().transform.position - transform.position;
+        float distanceToTarget = targetDirection.magnitude;
+        //targetDirection.y = 0f;
+        targetDirection.Normalize();
+        float jumpForce = 15.0f;
+            
+        Vector3 jumpVelocity = -targetDirection *jumpForce;
+
+        R.rigidbod.AddForce(jumpVelocity, ForceMode.VelocityChange);
+        R.rigidbod.AddForce(Vector3.down * Physics.gravity.magnitude, ForceMode.Acceleration);
+        new WaitForSeconds(.5f);
+        
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, R.navMeshagent.angularSpeed);
+        yield return new WaitForSeconds(2f);
+    }
 }

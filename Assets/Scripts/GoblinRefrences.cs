@@ -77,7 +77,12 @@ public class GoblinRefrences : MonoBehaviour
     }
     private void Start()
     {
-        WanderRange = GoblicCampScript.WanderRange;
+        GoblinCamp = GameObject.FindGameObjectWithTag("GoblinCamp");
+        GoblicCampScript = GoblinCamp.GetComponent<GoblinCamp>();
+        if (GoblicCampScript != null)
+        {
+            WanderRange = GoblicCampScript.WanderRange;
+        }
         JumpAttackCooldown = Random.Range(minJumpAttackCooldown, maxJumpAttackCooldown);
         RockThrowCooldown = Random.Range(minRockThrowCooldown, maxRockThrowCooldown);
         if (navMeshagent != null)

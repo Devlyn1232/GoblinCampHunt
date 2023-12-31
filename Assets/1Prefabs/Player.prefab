@@ -257,15 +257,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04738b0f2bf0b54db1e23ead55f9a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainHandWeaponSelection: 0
-  Sword: {fileID: 355312524381552382, guid: 0e6e8ed9a78cac94da95dce2255194e0, type: 3}
-  Axe: {fileID: 8203073568141072114, guid: b60a42e631abfe84eb3e84e7aed64bb9, type: 3}
-  Hammer: {fileID: 8591273635324488586, guid: e2f1c6d225feb4248b3ab167a239ddb3, type: 3}
-  Dagger1: {fileID: 5458737265024032779, guid: c420462698b281c489b0c4fd3e93e65b, type: 3}
-  OffHandWeaponSelection: 0
-  Bow: {fileID: 3317823749142253822, guid: 8a1d2b1ebab42e64286cc318e36ebdb2, type: 3}
-  Sheid: {fileID: 1826543164433107775, guid: 06e6eb3247237ea49857e7f33938ae19, type: 3}
-  Dagger2: {fileID: 5458737265024032779, guid: c5318d9b5525fb14399deebc9573642e, type: 3}
+  CanAttack: 0
+  Cam: {fileID: 0}
+  mainWeapons: []
+  mainWeaponDamage: []
+  mainWeaponAttackCooldown: []
+  mainWeaponSelection: 0
+  sideWeapons: []
+  sideWeaponSelection: 0
   Blocking: 0
   BlockGainPerTick: 0.5
   MaxBlockIntegredy: 100
@@ -285,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  healthBar: {fileID: 0}
 --- !u!136 &3610826696909357365
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -477,7 +477,6 @@ GameObject:
   - component: {fileID: 6400132567153884232}
   - component: {fileID: 5579384072510288590}
   - component: {fileID: 2107774336282050955}
-  - component: {fileID: 5092435003343751294}
   m_Layer: 7
   m_Name: CutPlane
   m_TagString: Untagged
@@ -552,27 +551,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5092435003343751294
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7797600091818847845}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10, y: 2.220446e-16, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8057197033338220449
 GameObject:
   m_ObjectHideFlags: 0

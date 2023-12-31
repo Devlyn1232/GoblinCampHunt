@@ -6,15 +6,23 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100;
     public float currentHealth;
+
+    [SerializeField] PlayerHealthBar healthBar;
+    void Awake()
+    {
+        healthBar = GetComponentInChildren<PlayerHealthBar>();
+    }
     void Start()
     {
-        //currentHealth = maxHealth;
+        currentHealth = maxHealth;
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
 
     // Update is called once per frame
     public void TakeDamage(float Damage)
     {
         currentHealth -= Damage;
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
         /*
         if(currentHealth <= 0)
         {

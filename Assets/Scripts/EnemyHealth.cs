@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class EnemyHealth : MonoBehaviour
 {
     public GoblinRefrences R;
+    public GoblinMovement M;
     public UnityEvent Death;
 
     public float currentHealth;
@@ -30,6 +31,10 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         healthBar.UpdateHealthBar(currentHealth, maxHealth);
         R.currentHealth = currentHealth;
+        if (!R.canSeeEnemy)
+        {
+            M.dashAndLookAtPlayer();
+        }
         if (currentHealth <= 0)
         {
             Instantiate(R.deathParticle, transform.position, transform.rotation);
