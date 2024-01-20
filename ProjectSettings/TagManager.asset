@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WeakPrey
   - GoblinCamp
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Plants
   - HealthRegen
   - Enemy
-  - 
+  - CampFire
   - 
   - 
   - 

@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public GoblinRefrences R;
     public GoblinMovement M;
+    public GameStates GS;
     public UnityEvent Death;
 
     public float currentHealth;
@@ -18,12 +19,18 @@ public class EnemyHealth : MonoBehaviour
     {
         healthBar = GetComponentInChildren<EnemyHealthBar>();
     }
-
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.UpdateHealthBar(currentHealth, maxHealth);
         R.currentHealth = currentHealth;
+        // Assign the GameStates script reference using FindObjectOfType during runtime
+        GS = FindObjectOfType<GameStates>();
+        
+        if (GS == null)
+        {
+            Debug.LogError("GameStates script not found in the scene!");
+        }
     }
 
     public void TakeDamage(float damage)
@@ -37,6 +44,8 @@ public class EnemyHealth : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
+            GS.combatIminant = false;
+            GS.inCombat = false;
             Instantiate(R.deathParticle, transform.position, transform.rotation);
             //Death.Invoke();
             Destroy(gameObject);

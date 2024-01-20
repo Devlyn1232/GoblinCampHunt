@@ -10,6 +10,7 @@ public class GoblinRefrences : MonoBehaviour
     [HideInInspector] public Animator animator;
     public EnemyHealth enemyHealth;
     public float currentHealth;
+    public bool inCombat;
 
     [Header("Stats")]
     public int Encounters = 0;

@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 8675590529855066668}
   - component: {fileID: 7376130036613676780}
   - component: {fileID: 5682451219145041091}
+  - component: {fileID: 6674550377388243285}
   m_Layer: 11
   m_Name: Goblin
   m_TagString: Untagged
@@ -381,6 +382,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   enemyHealth: {fileID: 2040460995013721299}
   currentHealth: 0
+  inCombat: 0
   Encounters: 0
   MaxEncounters: 3
   deathParticle: {fileID: 8622166748080638, guid: 59c925e4801aa3149895909eaf13ad21, type: 3}
@@ -467,6 +469,7 @@ MonoBehaviour:
   A: {fileID: 2304640426959037712}
   M: {fileID: 6665991915230122652}
   randomMovement: {fileID: 8342082344754796664}
+  GS: {fileID: 5255965201541319275, guid: 8215a1d47ad3cfd46bbcce3c319b698b, type: 3}
 --- !u!114 &6665991915230122652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,21 +498,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   R: {fileID: 7282995052567207247}
   M: {fileID: 6665991915230122652}
+  GS: {fileID: 5255965201541319275, guid: 8215a1d47ad3cfd46bbcce3c319b698b, type: 3}
   Death:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   currentHealth: 0
   maxHealth: 30
   healthBar: {fileID: 5368627167607097784}
@@ -649,6 +641,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 2
+--- !u!114 &6674550377388243285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183944569000284404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5528414350037035173
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,21 +14,17 @@ public class GoblinCamp : MonoBehaviour
     void Start()
     {
         currentGoblins = 0;
+        
+        StartCoroutine(SummonGoblinAtCamp());
     }
-    void Update()
-    {
-        if(CanSummonGoblin)
-        {
-            StartCoroutine(SummonGoblinAtCamp());
-        }
-    }
-
     public IEnumerator SummonGoblinAtCamp()
     {
-        CanSummonGoblin = false;
         yield return new WaitForSeconds(Random.Range(10, 20));
-        Instantiate(Goblin, transform.position, transform.rotation);
-        CanSummonGoblin = true;
+        if(currentGoblins < MaxGoblins)
+        {
+            Instantiate(Goblin, transform.position, transform.rotation);
+        }
+        StartCoroutine(SummonGoblinAtCamp());
     }
     private void OnDrawGizmos()
     {

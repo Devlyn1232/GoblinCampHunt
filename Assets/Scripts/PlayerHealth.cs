@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
     }
     void Start()
     {
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         healthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
 
@@ -35,14 +35,12 @@ public class PlayerHealth : MonoBehaviour
         if (maxHealth >= currentHealth)
         {
             currentHealth += Health;
-            if(maxHealth >= currentHealth)
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
+            if(maxHealth <= currentHealth)
             {
                 currentHealth = maxHealth;
+                healthBar.UpdateHealthBar(currentHealth, maxHealth);
             }
-        }
-        else
-        {
-            currentHealth = maxHealth;
         }
     }
 }

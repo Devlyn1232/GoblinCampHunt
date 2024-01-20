@@ -10,7 +10,7 @@ public class GoblinMovement : MonoBehaviour
      // Change direction every 2 seconds
     private Vector3 currentDirection;
 
-    void Update()
+    void FixedUpdate()
     {
         if (R.spin)
         {

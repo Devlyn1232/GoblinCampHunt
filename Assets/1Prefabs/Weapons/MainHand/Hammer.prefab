@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3716049309172266202}
   m_Layer: 7
   m_Name: Hammer
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,5 +143,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.36132833, y: 0.8249026, z: 0.24146956}
-  m_Center: {x: 0, y: 0.21669373, z: 0.00000008940697}
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.5, z: 0.00000008940697}

@@ -7,16 +7,22 @@ public class CampFireHeal : MonoBehaviour
     public float healthAmount = 5f;
     public float healInterval = 1f;
     public bool canHeal = true;
+    [SerializeField] public GameStates GS;
+    void Awake()
+    {
+        GS = FindObjectOfType<GameStates>();
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if (canHeal)
+        if (canHeal && !GS.inCombat)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
                 if (playerHealth != null)
                 {
+                    canHeal = false;
                     StartCoroutine(HealPlayerOverTime(playerHealth));
                 }
             }
@@ -25,6 +31,7 @@ public class CampFireHeal : MonoBehaviour
                 EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                 {
+                    canHeal = false;
                     StartCoroutine(HealEnemyOverTime(enemyHealth));
                 }
             }
@@ -33,23 +40,15 @@ public class CampFireHeal : MonoBehaviour
 
     private IEnumerator HealPlayerOverTime(PlayerHealth playerHealth)
     {
-        canHeal = false;
-        while (playerHealth.currentHealth < playerHealth.maxHealth)
-        {
-            playerHealth.Heal(healthAmount);
-            yield return new WaitForSeconds(healInterval);
-        }
+        playerHealth.Heal(healthAmount);
+        yield return new WaitForSeconds(healInterval);
         canHeal = true;
     }
 
     private IEnumerator HealEnemyOverTime(EnemyHealth enemyHealth)
     {
-        canHeal = false;
-        while (enemyHealth.currentHealth < enemyHealth.maxHealth)
-        {
-            enemyHealth.Heal(healthAmount);
-            yield return new WaitForSeconds(healInterval);
-        }
+        enemyHealth.Heal(healthAmount);
+        yield return new WaitForSeconds(healInterval);
         canHeal = true;
     }
 }

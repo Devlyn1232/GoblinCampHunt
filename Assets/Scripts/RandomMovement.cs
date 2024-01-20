@@ -16,11 +16,15 @@ public class RandomMovement : MonoBehaviour //don't forget to change the script 
     {
         agent = GetComponent<NavMeshAgent>();
         range = R.WanderRange;
-        centrePoint = R.GoblinCamp.transform;
+        if (R.GoblinCamp != null)
+        {
+            centrePoint = R.GoblinCamp.transform;
+        }
+        
     }
 
     
-    void Update()
+    void FixedUpdate()
     {
         if(agent.remainingDistance <= agent.stoppingDistance) //done with path
         {

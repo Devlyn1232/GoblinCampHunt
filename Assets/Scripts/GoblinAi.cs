@@ -9,8 +9,20 @@ public class GoblinAi : MonoBehaviour
     public GoblinAttack A;
     public GoblinMovement M;
     public RandomMovement randomMovement;
+    public GameStates GS;
 
-    public void Update()
+    void Start()
+    {
+        // Assign the GameStates script reference using FindObjectOfType during runtime
+        GS = FindObjectOfType<GameStates>();
+        
+        if (GS == null)
+        {
+            Debug.LogError("GameStates script not found in the scene!");
+        }
+    }
+
+    public void FixedUpdate()
     {
         if (!R.AttackMode && !R.HuntMode &&!R.returnToBase)
         {
@@ -38,8 +50,10 @@ public class GoblinAi : MonoBehaviour
                 R.navMeshagent.SetDestination(food.transform.position);
             }
         }
+
         if (R.canSeeEnemy)
         {
+            GS.combatIminant = true;
             if(R.returnToBase == true)
             {
                 R.returnToBase = false;
@@ -62,14 +76,23 @@ public class GoblinAi : MonoBehaviour
                 {
                     A.RockThrow();
                 }
-                    
             }
-            
-            
         }
-        else if (R.AttackMode)
+        if (!R.canSeeEnemy)
         {
+            GS.combatIminant = false;
+        }
+        
+        if (R.AttackMode)
+        {
+            GS.inCombat = true;
+            R.inCombat = true;
             A.CantFindEnemy();
+        }
+        if (!R.AttackMode)
+        {
+            R.inCombat = false;
+            GS.inCombat = false;
         }
 
         if (R.canSeeFood && !R.AttackMode)
@@ -80,6 +103,5 @@ public class GoblinAi : MonoBehaviour
         {
             R.HuntMode = false;
         }
-        // Add other modes or actions here if needed
     }
 }
