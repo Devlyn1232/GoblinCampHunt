@@ -31,11 +31,17 @@ public class GoblinSight : MonoBehaviour
             if (Vector3.Angle(transform.forward, directionToFood) < R.angle / 2)
             {
                 float distanceToFood = Vector3.Distance(transform.position, food.position);
-
-                if(!Physics.Raycast(transform.position, directionToFood, distanceToFood, R.obstructionMask))
-                    R.canSeeFood = true;
-                else
+                Vector3 rayStart = transform.position + transform.up * 0.1f; // Adjust based on goblin's height and collider setup
+                if (Physics.Raycast(transform.position, directionToFood, out RaycastHit hit, distanceToFood, R.obstructionMask))
+                {
+                    Debug.Log($"Obstruction detected: {hit.collider.gameObject.name}");
                     R.canSeeFood = false;
+                }
+                else
+                {
+                    Debug.Log("Food is visible");
+                    R.canSeeFood = true;
+                }
             }
             else   
                 R.canSeeFood = false;
@@ -51,7 +57,6 @@ public class GoblinSight : MonoBehaviour
             if (Vector3.Angle(transform.forward, directionToEnemy) < R.angle / 2)
             {
                 float distanceToEnemy = Vector3.Distance(transform.position, enemy.position);
-
                 if(!Physics.Raycast(transform.position, directionToEnemy, distanceToEnemy, R.obstructionMask))
                     R.canSeeEnemy = true;
                 else

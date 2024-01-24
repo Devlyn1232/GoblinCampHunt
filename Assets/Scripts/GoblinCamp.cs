@@ -14,7 +14,6 @@ public class GoblinCamp : MonoBehaviour
     void Start()
     {
         currentGoblins = 0;
-        
         StartCoroutine(SummonGoblinAtCamp());
     }
     public IEnumerator SummonGoblinAtCamp()
@@ -23,6 +22,7 @@ public class GoblinCamp : MonoBehaviour
         if(currentGoblins < MaxGoblins)
         {
             Instantiate(Goblin, transform.position, transform.rotation);
+            currentGoblins ++;
         }
         StartCoroutine(SummonGoblinAtCamp());
     }

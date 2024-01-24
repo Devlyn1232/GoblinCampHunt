@@ -10,6 +10,9 @@ public class GoblinRefrences : MonoBehaviour
     [HideInInspector] public Animator animator;
     public EnemyHealth enemyHealth;
     public float currentHealth;
+    public float minRunAwayHealth = 1f;
+    public float runAwayHealth;
+    public float maxRunAwayHealth = 5f;
     public bool inCombat;
 
     [Header("Stats")]
@@ -50,7 +53,7 @@ public class GoblinRefrences : MonoBehaviour
     [Range(0,360)]
     public float angle;
     private float pathUpdateDeadLine;
-    [HideInInspector] public float WanderRange;
+    public float WanderRange;
 
     [Header("LayerMasks")]
     public LayerMask DangerMask; //player and player allies
@@ -64,7 +67,6 @@ public class GoblinRefrences : MonoBehaviour
 
     [Header("Modes")]
     public bool AttackMode; //when see player
-    public bool sneeking; //when is unseen and wants to kill
     public bool HuntMode; //when see wildlife
     public bool wandering; //when looking for food
     public bool returnToBase; //when done hunting or injured from fight
@@ -72,20 +74,21 @@ public class GoblinRefrences : MonoBehaviour
 
     private void Awake()
     {
-        rigidbod = GetComponent<Rigidbody>();
-        navMeshagent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-    }
-    private void Start()
-    {
         GoblinCamp = GameObject.FindGameObjectWithTag("GoblinCamp");
         GoblicCampScript = GoblinCamp.GetComponent<GoblinCamp>();
         if (GoblicCampScript != null)
         {
             WanderRange = GoblicCampScript.WanderRange;
         }
+        rigidbod = GetComponent<Rigidbody>();
+        navMeshagent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+    }
+    private void Start()
+    {
         JumpAttackCooldown = Random.Range(minJumpAttackCooldown, maxJumpAttackCooldown);
         RockThrowCooldown = Random.Range(minRockThrowCooldown, maxRockThrowCooldown);
+        runAwayHealth = Random.Range(minRunAwayHealth, maxRunAwayHealth);
         if (navMeshagent != null)
         {
             leapDistance = navMeshagent.stoppingDistance;
@@ -118,7 +121,7 @@ public class GoblinRefrences : MonoBehaviour
     }
     public GameObject FindClosestFood()
     {
-        GameObject[] animals = GameObject.FindGameObjectsWithTag("WeakPrey");
+        GameObject[] animals = GameObject.FindGameObjectsWithTag("Food");
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;

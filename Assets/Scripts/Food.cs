@@ -25,7 +25,7 @@ public class Food : MonoBehaviour
             Debug.Log("Food was hit by a weapon!");
             Durability--;
             playerResources.food += 1;
-            playerResources.UpdateFoodCounter();
+            playerResources.UpdateRecourceCounter();
             if (Durability <= 0)
             {
                 Destroy(gameObject);

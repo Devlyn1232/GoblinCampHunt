@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Objects : MonoBehaviour
 {
+    public bool rotation = true;
     void Start()
     {
         Invoke("FindLand", .05f);
-        transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        if(rotation)
+        {
+            transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        }
+        
     }
 
     public void FindLand()

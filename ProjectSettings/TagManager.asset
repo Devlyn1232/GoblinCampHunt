@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WeakPrey
   - GoblinCamp
   - Weapon
+  - Food
   layers:
   - Default
   - TransparentFX
@@ -16,7 +16,7 @@ TagManager:
   - UI
   - Slicable
   - Player
-  - Wildlife
+  - Food
   - Plants
   - HealthRegen
   - Enemy

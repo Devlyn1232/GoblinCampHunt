@@ -8,42 +8,45 @@ public class PlayerResources : MonoBehaviour
     public int rock;
     public int leaf;
     public int food;
-    public GameObject Campfire;
     public GameObject CampfireGhost;
-    public Transform CampfirePlacepoint;
+    public GameObject SnareTrapGhost;
+    public GameObject Camoflauge;
+    public Transform Placepoint;
     [SerializeField] PlayerResourceCounter woodCounter;
     [SerializeField] PlayerResourceCounter rockCounter;
     [SerializeField] PlayerResourceCounter leafCounter;
     [SerializeField] PlayerResourceCounter foodCounter;
     void Awake()
     {
+        UpdateRecourceCounter();
         woodCounter = GameObject.Find("wCounter").GetComponent<PlayerResourceCounter>();
         rockCounter = GameObject.Find("rCounter").GetComponent<PlayerResourceCounter>();
         leafCounter = GameObject.Find("gCounter").GetComponent<PlayerResourceCounter>();
         foodCounter = GameObject.Find("fCounter").GetComponent<PlayerResourceCounter>();
     }
-    // Update is called once per frame
-    public void UpdateWoodCounter()
-    {
-        woodCounter.ChangeCounter(wood);
-    }
-    public void UpdateRockCounter()
-    {
-        rockCounter.ChangeCounter(rock);
-    }
-    public void UpdateLeafCounter()
-    {
-        leafCounter.ChangeCounter(leaf);
-    }
-    public void UpdateFoodCounter()
+    public void UpdateRecourceCounter()
     {
         foodCounter.ChangeCounter(food);
+        leafCounter.ChangeCounter(leaf);
+        rockCounter.ChangeCounter(rock);
+        woodCounter.ChangeCounter(wood);
     }
     public void BuildCampFire()
     {
         if (wood >= 10)
         {
-            Instantiate(CampfireGhost, CampfirePlacepoint.position, CampfirePlacepoint.rotation);
+            Instantiate(CampfireGhost, Placepoint.position, Placepoint.rotation);
         }
     } 
+    public void BuildSnareTrap()
+    {
+        if (wood >= 5 && rock >= 5 && leaf >= 10 && food >= 10)
+        {
+            Instantiate(SnareTrapGhost, Placepoint.position, Placepoint.rotation);
+        }
+    } 
+    public void CamoflaugeSlef()
+    {
+        Camoflauge.SetActive(true);
+    }
 }

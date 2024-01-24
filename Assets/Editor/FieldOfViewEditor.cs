@@ -3,7 +3,7 @@ using UnityEngine;
 
 [CustomEditor(typeof(GoblinRefrences))]
 
-public class FieldOfViewEditor : Editor
+public class FieldOfViewEditor : UnityEditor.Editor
 {
     private void OnSceneGUI()
     {

@@ -25,7 +25,7 @@ public class Boulder : MonoBehaviour
             Debug.Log("Rock was hit by a weapon!");
             Durability--;
             playerResources.rock += 1;
-            playerResources.UpdateRockCounter();
+            playerResources.UpdateRecourceCounter();
             if (Durability <= 0)
             {
                 Destroy(gameObject);

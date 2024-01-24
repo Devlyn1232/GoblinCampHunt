@@ -25,7 +25,7 @@ public class Foliage : MonoBehaviour
             Debug.Log("Tree was hit by a weapon!");
             Durability--;
             playerResources.leaf += 1;
-            playerResources.UpdateLeafCounter();
+            playerResources.UpdateRecourceCounter();
             if (Durability <= 0)
             {
                 Destroy(gameObject);

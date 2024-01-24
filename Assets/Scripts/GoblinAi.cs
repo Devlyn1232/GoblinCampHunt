@@ -13,6 +13,7 @@ public class GoblinAi : MonoBehaviour
 
     void Start()
     {
+        R.returnToBase = false;
         // Assign the GameStates script reference using FindObjectOfType during runtime
         GS = FindObjectOfType<GameStates>();
         
@@ -24,16 +25,17 @@ public class GoblinAi : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!R.AttackMode && !R.HuntMode &&!R.returnToBase)
+        if (!R.AttackMode && !R.HuntMode && !R.returnToBase)
         {
             randomMovement.enabled = true;
             R.wandering = true;
             bool InCampRange = Vector3.Distance(transform.position, R.GoblinCamp.transform.position) <= R.WanderRange;
-
+            /*
             if (!InCampRange)
             {
                 R.returnToBase = true;
             }
+            */
         }
         else
         {
@@ -41,33 +43,49 @@ public class GoblinAi : MonoBehaviour
             R.wandering = false;
         }
 
+        if(R.currentHealth <= R.runAwayHealth)
+        {
+            R.returnToBase = true;
+            R.navMeshagent.SetDestination(R.GoblinCamp.transform.position);
+        }
+
+        /*
+        if(R.returnToBase)
+        {
+            
+        }
+        */
 
         if (R.canSeeFood && !R.AttackMode)
         {
+            R.wandering = false;
             GameObject food = R.FindClosestFood();
             if (food != null && R.navMeshagent != null && !R.AttackMode)
             {
+                bool InAttackRange = Physics.CheckSphere(transform.position, R.leapDistance, R.targetMask);
+                if(InAttackRange)
+                {
+                    if (R.CloseCanAttack)
+                    {
+                        A.JumpAttack();
+                    }
+                }
                 R.navMeshagent.SetDestination(food.transform.position);
+                
             }
         }
 
         if (R.canSeeEnemy)
         {
             GS.combatIminant = true;
-            if(R.returnToBase == true)
-            {
-                R.returnToBase = false;
-            }
             R.AttackMode = true;
             bool InAttackRange = Physics.CheckSphere(transform.position, R.leapDistance+1, R.DangerMask);
             if(InAttackRange)
             {
-                
                 if (R.CloseCanAttack)
                 {
                     A.JumpAttack();
                 }
-                    
             }
             bool InRangeAttack = Physics.CheckSphere(transform.position, R.leapDistance+10, R.DangerMask);
             if(InRangeAttack && !InAttackRange)
@@ -93,15 +111,6 @@ public class GoblinAi : MonoBehaviour
         {
             R.inCombat = false;
             GS.inCombat = false;
-        }
-
-        if (R.canSeeFood && !R.AttackMode)
-        {
-            R.HuntMode = true;
-        }
-        else
-        {
-            R.HuntMode = false;
         }
     }
 }

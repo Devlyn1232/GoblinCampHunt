@@ -12,6 +12,7 @@ public class EnemyHealth : MonoBehaviour
 
     public float currentHealth;
     public float maxHealth;
+    public float healthDeviation;
 
     [SerializeField] EnemyHealthBar healthBar;
 
@@ -21,6 +22,8 @@ public class EnemyHealth : MonoBehaviour
     }
     void Start()
     {
+        healthDeviation = Random.Range(-5,5);
+        maxHealth += healthDeviation;
         currentHealth = maxHealth;
         healthBar.UpdateHealthBar(currentHealth, maxHealth);
         R.currentHealth = currentHealth;
@@ -53,15 +56,17 @@ public class EnemyHealth : MonoBehaviour
     }
     public void Heal(float Health)
     {
-        if (currentHealth !>= maxHealth)
+        if (currentHealth <= maxHealth)
         {
             currentHealth += Health;
             R.currentHealth = currentHealth;
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
         }
         else
         {
             currentHealth = maxHealth;
             R.currentHealth = currentHealth;
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
         }
     }
 }
