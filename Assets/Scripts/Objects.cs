@@ -12,7 +12,6 @@ public class Objects : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
         }
-        
     }
 
     public void FindLand()
@@ -31,5 +30,10 @@ public class Objects : MonoBehaviour
                 transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
             }
         }
+    }
+
+    public void CollideWithObsticle()
+    {
+        Destroy(gameObject);
     }
 }

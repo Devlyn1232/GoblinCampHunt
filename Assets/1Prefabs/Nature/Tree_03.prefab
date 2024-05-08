@@ -27,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 814935704129457462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0, y: -1, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 880970725214738984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,9 +112,9 @@ Transform:
   m_GameObject: {fileID: 6791950039092535430}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0, y: -1, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 880970725214738984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -203,6 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   playerResources: {fileID: 0}
+  minDurability: 5
+  maxDurability: 10
   Durability: 0
 --- !u!1 &6941765000743290380
 GameObject:
@@ -217,7 +219,7 @@ GameObject:
   - component: {fileID: -7844949784643898386}
   m_Layer: 0
   m_Name: Tree_03
-  m_TagString: Untagged
+  m_TagString: Nature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,7 +234,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4376338348109310597}
@@ -248,12 +250,12 @@ LODGroup:
   m_GameObject: {fileID: 6941765000743290380}
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0.09733844, y: 2.4927113, z: -0.10189223}
-  m_Size: 4.984917
+  m_Size: 15
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.20098308
+  - screenRelativeHeight: 0.25
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8258636257821695437}
@@ -274,3 +276,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e99232df1463dc47b7d0930c472936c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotation: 1

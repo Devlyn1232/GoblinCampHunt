@@ -104,8 +104,10 @@ public class SliceObject : MonoBehaviour
                         // Place the upper and lower hulls at the original object's position
                         upperHull.transform.position = target.transform.position;
                         upperHull.transform.rotation = target.transform.rotation;
+                        upperHull.transform.localScale = target.transform.localScale;
                         lowerHull.transform.position = target.transform.position;
                         lowerHull.transform.rotation = target.transform.rotation;
+                        lowerHull.transform.localScale = target.transform.localScale;
 
                         // Destroy the original object after slicing
                         Destroy(target);

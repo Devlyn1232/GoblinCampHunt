@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3605752287694527422}
   m_Layer: 0
   m_Name: Rock_03
-  m_TagString: Untagged
+  m_TagString: Nature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e99232df1463dc47b7d0930c472936c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotation: 1
 --- !u!114 &3605752287694527422
 MonoBehaviour:
   m_ObjectHideFlags: 0

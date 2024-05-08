@@ -1,4 +1,5 @@
-﻿using System.Collections;
+
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
@@ -11,6 +12,8 @@ public class MeshGeneratorV2 : MonoBehaviour
     Mesh mesh;
     private int MESH_SCALE = 5;
     public GameObject[] objects;
+    public GameObject GoblinCamp;
+    public bool GoblinCampSpawned = false;
     [SerializeField] private AnimationCurve heightCurve;
     private Vector3[] vertices;
     private int[] triangles;
@@ -65,7 +68,7 @@ public class MeshGeneratorV2 : MonoBehaviour
         ColorMap();
         UpdateMesh();
     }
-
+    /*
     private void CreateMeshShape ()
     {
         // Creates seed
@@ -88,10 +91,62 @@ public class MeshGeneratorV2 : MonoBehaviour
             }
         }
     }
+    */
+    //*
+    private void CreateMeshShape()
+    {
+        mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
+
+        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+        
+        // Calculate the center position for reference
+        Vector2 center = new Vector2(xSize / 2f, zSize / 2f);
+        float islandRadius = Mathf.Min(xSize, zSize) / 2f; // Define the effective radius of the island
+
+        for (int i = 0, z = 0; z <= zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++)
+            {
+                Vector2 position = new Vector2(x, z);
+                float distanceFromCenter = Vector2.Distance(position, center);
+                float normalizedDistance = distanceFromCenter / islandRadius;
+
+                // Determine if the current position is at the edge
+                bool isEdge = x == 0 || z == 0 || x == xSize || z == zSize;
+
+                // Generate noise height
+                Vector2[] octaveOffsets = GetOffsetSeed();
+                float noiseHeight = GenerateNoiseHeight(z, x, octaveOffsets);
+                
+                // Adjust heights
+                float height = 0f;
+                if (!isEdge)
+                {
+                    // Apply the height curve and adjust based on the distance from the center
+                    float heightFactor = heightCurve.Evaluate(1 - normalizedDistance);
+                    height = noiseHeight * heightFactor;
+                    
+                    // Update min/max terrain heights for coloring
+                    if (height > maxTerrainheight) maxTerrainheight = height;
+                    if (height < minTerrainheight) minTerrainheight = height;
+                }
+                
+                vertices[i++] = new Vector3(x, height, z);
+            }
+        }
+
+        UpdateMesh(); // Ensure this method is called after vertices are set
+    }
+    //*/
 
     private Vector2[] GetOffsetSeed()
     {
-        seed = Random.Range(0, 1000);
+        if (seed == 0f)
+        {
+            seed = Random.Range(0, 1000);
+        }
+        
         
         // changes area of map
         System.Random prng = new System.Random(seed);
@@ -191,7 +246,7 @@ public class MeshGeneratorV2 : MonoBehaviour
                 if (noiseHeight > 3)
                 {
                     // Chance to generate
-                    if (Random.Range(1, 3) == 1)
+                    if (Random.Range(1, 5) == 1)
                     {
                         GameObject objectToSpawn = objects[Random.Range(0, objects.Length)];
                         var spawnAboveTerrainBy = noiseHeight * 2;
@@ -214,8 +269,33 @@ public class MeshGeneratorV2 : MonoBehaviour
 
         GetComponent<MeshCollider>().sharedMesh = mesh;
         gameObject.transform.localScale = new Vector3(MESH_SCALE, MESH_SCALE, MESH_SCALE);
-
+        SpawnObjectOnHighestPoint();
         MapEmbellishments();
+        // Call after updating the mesh to ensure we have the latest terrain info
+        
     }
 
+    private void SpawnObjectOnHighestPoint()
+    {
+        if (!GoblinCampSpawned && GoblinCamp != null)
+        {
+            // Find the highest point on the terrain
+            Vector3 highestPoint = Vector3.zero;
+            foreach (var vertex in vertices)
+            {
+                if (vertex.y > highestPoint.y)
+                {
+                    highestPoint = vertex;
+                }
+            }
+
+            // Adjust the highest point based on the Mesh scale and position
+            Vector3 worldPoint = transform.TransformPoint(highestPoint);
+
+            // Instantiate the object at the highest point
+            Instantiate(GoblinCamp, worldPoint, Quaternion.identity);
+
+            GoblinCampSpawned = true; // Prevent further spawns
+        }
+    }
 }
