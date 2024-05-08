@@ -13,6 +13,7 @@ public class SliceObject : MonoBehaviour
     public LayerMask ignoredLayers; // Layers to be ignored by the boxcast
     public GameObject CutDirection;
 
+    public float manaCost = 50;
     public Material crossSectionMaterial;
     public float cutForce = 200;
     public Vector3 boxCastSize = new Vector3(0.5f, 0.5f, 10f); // Size of the boxcast volume
@@ -20,6 +21,12 @@ public class SliceObject : MonoBehaviour
 
     private bool isSlicing = false;
     private float previousMouseX;
+    [SerializeField] PlayerMana playerMana;
+
+    void Awake()
+    {
+        playerMana = GetComponentInChildren<PlayerMana>();
+    }
 
     void Update()
     {
@@ -60,9 +67,13 @@ public class SliceObject : MonoBehaviour
     }
 
     void PerformSlice()
+{
+    // Check if there is enough mana to perform the slice
+    if (playerMana.TakeMana(manaCost))
     {
         Vector3 sliceDirection = endSlicePoint.position - startSlicePoint.position;
 
+        // Perform a box cast in the direction of the slice to detect all relevant objects
         RaycastHit[] hits = Physics.BoxCastAll(
             startSlicePoint.position,
             boxCastSize * 0.5f,
@@ -73,35 +84,32 @@ public class SliceObject : MonoBehaviour
             QueryTriggerInteraction.Ignore
         );
 
+        // Process each hit object
         if (hits.Length > 0)
         {
             foreach (RaycastHit hit in hits)
             {
+                // Check if the hit object's layer is not in the ignored layers
                 if (((1 << hit.collider.gameObject.layer) & ignoredLayers) == 0)
                 {
                     GameObject target = hit.collider.gameObject;
-
-                    // Store the children before slicing
                     List<Transform> children = new List<Transform>();
                     foreach (Transform child in target.transform)
                     {
                         children.Add(child);
                     }
 
-                    // Perform slicing using world space coordinates
+                    // Perform slicing using the EzySlice library
                     SlicedHull hull = target.Slice(planeDebug.position, planeDebug.up);
-
                     if (hull != null)
                     {
-                        // Create upper and lower hulls
+                        // Create and setup upper and lower hulls from the sliced object
                         GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
                         GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
-
-                        // Set up sliced components for upper and lower hulls
                         SetupSlicedComponent(upperHull);
                         SetupSlicedComponent(lowerHull);
 
-                        // Place the upper and lower hulls at the original object's position
+                        // Ensure the sliced parts are positioned and scaled correctly
                         upperHull.transform.position = target.transform.position;
                         upperHull.transform.rotation = target.transform.rotation;
                         upperHull.transform.localScale = target.transform.localScale;
@@ -109,10 +117,10 @@ public class SliceObject : MonoBehaviour
                         lowerHull.transform.rotation = target.transform.rotation;
                         lowerHull.transform.localScale = target.transform.localScale;
 
-                        // Destroy the original object after slicing
+                        // Destroy the original object to avoid duplicates and clutter
                         Destroy(target);
 
-                        // Place the children under the upper and lower hulls
+                        // Reassign children to maintain the object hierarchy
                         foreach (Transform child in children)
                         {
                             child.SetParent(child.position.y > planeDebug.position.y ? upperHull.transform : lowerHull.transform);
@@ -122,6 +130,8 @@ public class SliceObject : MonoBehaviour
             }
         }
     }
+}
+        
 
 
     void ReparentSlicedParts(GameObject originalObject, GameObject upperHull, GameObject lowerHull, List<Transform> children)

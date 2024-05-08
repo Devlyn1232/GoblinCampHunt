@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour
 
     private const float dashDistance = 30;
     private const float dashDuration = 0.1f;
-    private const float dashCooldown = 1.5f;
+    private const float dashCooldown = .1f;
+    public float dashManaCost = 10f;
 
     public bool isDashing;
     public float dashTimer;
@@ -23,6 +24,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     public LayerMask obstacleMask;
     public DashCooldownVisuial DashCooldownV;
+    [SerializeField] PlayerMana playerMana;
+
+    void Awake()
+    {
+        playerMana = GetComponentInChildren<PlayerMana>();
+    }
 
     void Start()
     {
@@ -63,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartDash()
     {
+        if (playerMana.TakeMana(dashManaCost))
         isDashing = true;
         dashOnCooldown = true;
         DashCooldownV.Cooldown(dashCooldown);
