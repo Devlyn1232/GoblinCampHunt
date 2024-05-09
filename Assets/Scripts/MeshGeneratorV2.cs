@@ -251,6 +251,7 @@ public class MeshGeneratorV2 : MonoBehaviour
                         GameObject objectToSpawn = objects[Random.Range(0, objects.Length)];
                         var spawnAboveTerrainBy = noiseHeight * 2;
                         Instantiate(objectToSpawn, new Vector3(mesh.vertices[i].x * MESH_SCALE, spawnAboveTerrainBy, mesh.vertices[i].z * MESH_SCALE), Quaternion.identity);
+                        
                     }
                 }
             }

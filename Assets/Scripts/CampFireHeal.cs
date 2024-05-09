@@ -26,7 +26,7 @@ public class CampFireHeal : MonoBehaviour
                     StartCoroutine(HealPlayerOverTime(playerHealth));
                 }
             }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)

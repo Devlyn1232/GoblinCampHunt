@@ -83,6 +83,12 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         dashTimer -= Time.fixedDeltaTime;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, dashDistance, obstacleMask)) {
+            // Stop the dash if an obstacle is hit
+            isDashing = false;
+            velocity = Vector3.zero;
+        }
         if (dashTimer <= 0)
         {
             isDashing = false;
