@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6840989815014681252}
   - component: {fileID: -6854703211779725943}
   - component: {fileID: 6644506279733526660}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Branch_01
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -121,6 +121,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!114 &6644506279733526660
 MonoBehaviour:
   m_ObjectHideFlags: 0

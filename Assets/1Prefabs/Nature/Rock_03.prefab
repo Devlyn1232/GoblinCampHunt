@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7495719641570791432}
   - component: {fileID: 8103588116640409303}
   - component: {fileID: 3605752287694527422}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Rock_03
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -121,6 +121,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!114 &3605752287694527422
 MonoBehaviour:
   m_ObjectHideFlags: 0

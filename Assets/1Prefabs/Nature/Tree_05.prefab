@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7762923490116116496}
   - component: {fileID: 7113108561491346172}
   - component: {fileID: 2848415721444642165}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Tree_05_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 503707795537676108}
   - component: {fileID: 3743347071977754656}
   - component: {fileID: 8132718638842906403}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Tree_05_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 9069115365609054727}
   - component: {fileID: 1282714561840611028}
   - component: {fileID: -5654723478718157228}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Tree_05
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -299,3 +299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576

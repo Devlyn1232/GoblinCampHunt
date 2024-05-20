@@ -9,6 +9,7 @@ public class GoblinCamp : MonoBehaviour
     public GameObject Goblin;
     public GameObject[] goblinHouses;
     public float WanderRange = 100;
+    public LayerMask Nature;
     //public bool CanSummonGoblin;
     
     // Update is called once per frame
@@ -39,14 +40,14 @@ public class GoblinCamp : MonoBehaviour
         Gizmos.color = new Color(1, 1, 0, .3f);
         Gizmos.DrawWireSphere(transform.position, WanderRange);
     }
-    public void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Nature"))
+        if ((Nature.value & (1 << other.gameObject.layer)) > 0)
         {
             Objects objects = other.GetComponent<Objects>();
             if (objects != null)
             {
-                objects.CollideWithObsticle();
+                Destroy(objects);
             }
         }
     }

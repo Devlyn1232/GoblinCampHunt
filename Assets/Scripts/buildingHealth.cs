@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class buildingHealth : MonoBehaviour
+public class BuildingHealth : MonoBehaviour
 {
     public GameObject Player;
     public GoblinCamp goblinCamp;
-    public int minDurability = 50;
-    public int maxDurability = 100;
+    public LayerMask Nature;
+    public int minDurability = 10;
+    public int maxDurability = 50;
     public int Durability;
+    public GameObject hitParticle;
+
     void Start()
     {
         GameObject goblinCampObject = GameObject.Find("GoblinCamp");
@@ -22,15 +25,23 @@ public class buildingHealth : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Check if the triggering GameObject has a specific tag
         if (other.gameObject.CompareTag("Weapon"))
         {
-            // Perform actions when the trigger event happens with an object having the specified tag
-            Debug.Log("Tree was hit by a weapon!");
+            Debug.Log("Building was hit by a weapon!");
             Durability--;
+            Instantiate(hitParticle, transform.position, transform.rotation);
             if (Durability <= 0)
             {
                 Destroy(gameObject);
+            }
+        }
+
+        if ((Nature.value & (1 << other.gameObject.layer)) > 0)
+        {
+            Objects objects = other.GetComponent<Objects>();
+            if (objects != null)
+            {
+                Destroy(objects);
             }
         }
     }

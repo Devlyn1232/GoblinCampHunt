@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 38335279662569219}
   - component: {fileID: 3964073196119286543}
   - component: {fileID: -7491707784414435800}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bush_03
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ LODGroup:
   m_GameObject: {fileID: 38335279662140195}
   serializedVersion: 2
   m_LocalReferencePoint: {x: -0.07779813, y: 0.24657731, z: -0.14311454}
-  m_Size: 1.5147274
+  m_Size: 13
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -71,6 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!1 &7209958949695466915
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +88,7 @@ GameObject:
   - component: {fileID: 5086433498838087047}
   - component: {fileID: 4434211006889732880}
   - component: {fileID: 7058618356254715797}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bush_03_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +173,7 @@ GameObject:
   - component: {fileID: 6955585385951576129}
   - component: {fileID: 5304575355203780508}
   - component: {fileID: 8098650942188911073}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bush_03_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

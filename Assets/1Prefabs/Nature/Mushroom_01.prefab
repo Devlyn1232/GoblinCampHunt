@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4385080170327957909}
   - component: {fileID: 882770542445914717}
   - component: {fileID: 5536745196455617736}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Mushroom_01
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ LODGroup:
   m_GameObject: {fileID: 4385080170328260021}
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0.008836374, y: 0.1702209, z: 0.003103435}
-  m_Size: 0.3406743
+  m_Size: 13
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -71,6 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!1 &8373805728737738159
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +88,7 @@ GameObject:
   - component: {fileID: 1342704734340769970}
   - component: {fileID: 6080340177118917108}
   - component: {fileID: 2847339849958604872}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Mushroom_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +173,7 @@ GameObject:
   - component: {fileID: 9109228112611924850}
   - component: {fileID: 8376272747481921258}
   - component: {fileID: 8697780535875853671}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Mushroom_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

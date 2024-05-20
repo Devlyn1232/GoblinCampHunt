@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5359241393257161540}
   - component: {fileID: 1678589971047452838}
   - component: {fileID: 5198447465436440670}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Flowers_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 5186735023777053022}
   - component: {fileID: 5777168012237853380}
   - component: {fileID: 217640222283841388}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Flowers_01
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ LODGroup:
   m_GameObject: {fileID: 5186735023776687486}
   serializedVersion: 2
   m_LocalReferencePoint: {x: -0.027090028, y: 0.1818975, z: -0.027729183}
-  m_Size: 0.3828378
+  m_Size: 13
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -194,6 +194,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!1 &5440194995934546347
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +211,7 @@ GameObject:
   - component: {fileID: 3753148574503426463}
   - component: {fileID: 7879025687417389755}
   - component: {fileID: 3144868257754437983}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Flowers_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

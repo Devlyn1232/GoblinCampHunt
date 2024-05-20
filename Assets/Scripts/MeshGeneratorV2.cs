@@ -1,12 +1,10 @@
-
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshFilter), typeof(MeshCollider))]
 public class MeshGeneratorV2 : MonoBehaviour
 {
     Mesh mesh;
@@ -17,49 +15,50 @@ public class MeshGeneratorV2 : MonoBehaviour
     [SerializeField] private AnimationCurve heightCurve;
     private Vector3[] vertices;
     private int[] triangles;
-    
+
     private Color[] colors;
     [SerializeField] private Gradient gradient;
-    
+
     private float minTerrainheight;
     private float maxTerrainheight;
 
     public int xSize;
     public int zSize;
 
-    public float scale; 
+    public float scale;
     public int octaves;
     public float lacunarity;
 
     public int seed;
 
     private float lastNoiseHeight;
-    
+
     public NavMeshSurface navSurface;
 
     void Start()
     {
-        // Use this method if you havn't filled out the properties in the inspector
-        // SetNullProperties(); 
-        
+        // Use this method if you haven't filled out the properties in the inspector
+        // SetNullProperties();
+
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         CreateNewMap();
         Invoke("generateNavMesh", .1f);
     }
+
     void generateNavMesh()
     {
         navSurface.BuildNavMesh();
     }
 
-    private void SetNullProperties() 
+    private void SetNullProperties()
     {
         if (xSize <= 0) xSize = 50;
         if (zSize <= 0) zSize = 50;
         if (octaves <= 0) octaves = 5;
         if (lacunarity <= 0) lacunarity = 2;
         if (scale <= 0) scale = 50;
-    } 
+    }
 
     public void CreateNewMap()
     {
@@ -68,41 +67,19 @@ public class MeshGeneratorV2 : MonoBehaviour
         ColorMap();
         UpdateMesh();
     }
-    /*
-    private void CreateMeshShape ()
-    {
-        // Creates seed
-        Vector2[] octaveOffsets = GetOffsetSeed();
 
-        if (scale <= 0) scale = 0.0001f;
-            
-        // Create vertices
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-
-        for (int i = 0, z = 0; z <= zSize; z++)
-        {
-            for (int x = 0; x <= xSize; x++)
-            {
-                // Set height of vertices
-                float noiseHeight = GenerateNoiseHeight(z, x, octaveOffsets);
-                SetMinMaxHeights(noiseHeight);
-                vertices[i] = new Vector3(x, noiseHeight, z);
-                i++;
-            }
-        }
-    }
-    */
-    //*
     private void CreateMeshShape()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        
+
         // Calculate the center position for reference
         Vector2 center = new Vector2(xSize / 2f, zSize / 2f);
         float islandRadius = Mathf.Min(xSize, zSize) / 2f; // Define the effective radius of the island
+
+        Vector2[] octaveOffsets = GetOffsetSeed();
 
         for (int i = 0, z = 0; z <= zSize; z++)
         {
@@ -116,9 +93,8 @@ public class MeshGeneratorV2 : MonoBehaviour
                 bool isEdge = x == 0 || z == 0 || x == xSize || z == zSize;
 
                 // Generate noise height
-                Vector2[] octaveOffsets = GetOffsetSeed();
                 float noiseHeight = GenerateNoiseHeight(z, x, octaveOffsets);
-                
+
                 // Adjust heights
                 float height = 0f;
                 if (!isEdge)
@@ -126,19 +102,18 @@ public class MeshGeneratorV2 : MonoBehaviour
                     // Apply the height curve and adjust based on the distance from the center
                     float heightFactor = heightCurve.Evaluate(1 - normalizedDistance);
                     height = noiseHeight * heightFactor;
-                    
+
                     // Update min/max terrain heights for coloring
                     if (height > maxTerrainheight) maxTerrainheight = height;
                     if (height < minTerrainheight) minTerrainheight = height;
                 }
-                
+
                 vertices[i++] = new Vector3(x, height, z);
             }
         }
 
         UpdateMesh(); // Ensure this method is called after vertices are set
     }
-    //*/
 
     private Vector2[] GetOffsetSeed()
     {
@@ -146,13 +121,13 @@ public class MeshGeneratorV2 : MonoBehaviour
         {
             seed = Random.Range(0, 1000);
         }
-        
-        
+
         // changes area of map
         System.Random prng = new System.Random(seed);
         Vector2[] octaveOffsets = new Vector2[octaves];
-                    
-        for (int o = 0; o < octaves; o++) {
+
+        for (int o = 0; o < octaves; o++)
+        {
             float offsetX = prng.Next(-100000, 100000);
             float offsetY = prng.Next(-100000, 100000);
             octaveOffsets[o] = new Vector2(offsetX, offsetY);
@@ -191,8 +166,7 @@ public class MeshGeneratorV2 : MonoBehaviour
             minTerrainheight = noiseHeight;
     }
 
-
-    private void CreateTriangles() 
+    private void CreateTriangles()
     {
         // Need 6 vertices to create a square (2 triangles)
         triangles = new int[xSize * zSize * 6];
@@ -200,7 +174,7 @@ public class MeshGeneratorV2 : MonoBehaviour
         int vert = 0;
         int tris = 0;
         // Go to next row
-        for (int z = 0; z < xSize; z++)
+        for (int z = 0; z < zSize; z++)
         {
             // fill row
             for (int x = 0; x < xSize; x++)
@@ -224,15 +198,14 @@ public class MeshGeneratorV2 : MonoBehaviour
         colors = new Color[vertices.Length];
 
         // Loop over vertices and apply a color from the depending on height (y axis value)
-        for (int i = 0, z = 0; z < vertices.Length; z++)
+        for (int i = 0; i < vertices.Length; i++)
         {
             float height = Mathf.InverseLerp(minTerrainheight, maxTerrainheight, vertices[i].y);
             colors[i] = gradient.Evaluate(height);
-            i++;
         }
     }
 
-    private void MapEmbellishments() 
+    private void MapEmbellishments()
     {
         for (int i = 0; i < vertices.Length; i++)
         {
@@ -240,7 +213,7 @@ public class MeshGeneratorV2 : MonoBehaviour
             Vector3 worldPt = transform.TransformPoint(mesh.vertices[i]);
             var noiseHeight = worldPt.y;
             // Stop generation if height difference between 2 vertices is too steep
-            if(System.Math.Abs(lastNoiseHeight - worldPt.y) < 25)
+            if (Mathf.Abs(lastNoiseHeight - worldPt.y) < 25)
             {
                 // min height for object generation
                 if (noiseHeight > 3)
@@ -251,7 +224,6 @@ public class MeshGeneratorV2 : MonoBehaviour
                         GameObject objectToSpawn = objects[Random.Range(0, objects.Length)];
                         var spawnAboveTerrainBy = noiseHeight * 2;
                         Instantiate(objectToSpawn, new Vector3(mesh.vertices[i].x * MESH_SCALE, spawnAboveTerrainBy, mesh.vertices[i].z * MESH_SCALE), Quaternion.identity);
-                        
                     }
                 }
             }
@@ -273,7 +245,6 @@ public class MeshGeneratorV2 : MonoBehaviour
         SpawnObjectOnHighestPoint();
         MapEmbellishments();
         // Call after updating the mesh to ensure we have the latest terrain info
-        
     }
 
     private void SpawnObjectOnHighestPoint()

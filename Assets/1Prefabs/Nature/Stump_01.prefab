@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 108507113624698413}
   - component: {fileID: 3153294727251981205}
   - component: {fileID: -5373126492449248316}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Stump_01
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -71,6 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!1 &6690580599928000713
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +88,7 @@ GameObject:
   - component: {fileID: 5968582415777641174}
   - component: {fileID: 3759092166302592149}
   - component: {fileID: 8011157136868685097}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Stump_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +173,7 @@ GameObject:
   - component: {fileID: 8313632506172493172}
   - component: {fileID: 3017253793611418416}
   - component: {fileID: 7949166958582832014}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Stump_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

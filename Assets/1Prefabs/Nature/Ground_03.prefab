@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7549564184259322936}
   - component: {fileID: 6179971859430226796}
   - component: {fileID: -7422516599169099707}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Ground_03
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -120,3 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576

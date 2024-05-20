@@ -6,14 +6,15 @@ public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed = 5f;
     public float jumpForce = 8f;
+    public float groundCheckDistance = 0.1f; // Distance for ground check
 
     private Rigidbody rb;
     private float horizontalInput;
     private float verticalInput;
 
-    private const float dashDistance = 30;
+    private const float dashDistance = 40;
     private const float dashDuration = 0.1f;
-    private const float dashCooldown = .1f;
+    private const float dashCooldown = 0.1f;
     public float dashManaCost = 10f;
 
     public bool isDashing;
@@ -23,8 +24,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dashDirection;
     private Vector3 velocity;
     public LayerMask obstacleMask;
+    public LayerMask groundMask; // Layer mask for ground check
     public DashCooldownVisuial DashCooldownV;
     [SerializeField] PlayerMana playerMana;
+
+    private bool isGrounded;
 
     void Awake()
     {
@@ -44,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
 
         // Check for jump input
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             Jump();
         }
@@ -54,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
         {
             StartDash();
         }
+
+        // Check if the player is on the ground
+        GroundCheck();
     }
 
     void FixedUpdate()
@@ -71,20 +78,23 @@ public class PlayerMovement : MonoBehaviour
     private void StartDash()
     {
         if (playerMana.TakeMana(dashManaCost))
-        isDashing = true;
-        dashOnCooldown = true;
-        DashCooldownV.Cooldown(dashCooldown);
-        Vector3 inputDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        dashDirection = transform.TransformDirection(inputDirection) * dashDistance;
-        dashTimer = dashDuration;
-        dashCooldownTimer = dashCooldown;
+        {
+            isDashing = true;
+            dashOnCooldown = true;
+            DashCooldownV.Cooldown(dashCooldown);
+            Vector3 inputDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
+            dashDirection = transform.TransformDirection(inputDirection) * dashDistance;
+            dashTimer = dashDuration;
+            dashCooldownTimer = dashCooldown;
+        }
     }
 
     private void Dash()
     {
         dashTimer -= Time.fixedDeltaTime;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, dashDistance, obstacleMask)) {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, dashDistance, obstacleMask))
+        {
             // Stop the dash if an obstacle is hit
             isDashing = false;
             velocity = Vector3.zero;
@@ -116,7 +126,25 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        // Implement a grounded check here
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        // Ensure the player is grounded before jumping
+        if (isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false; // Set isGrounded to false immediately after jumping
+        }
+    }
+
+    void GroundCheck()
+    {
+        // Perform a raycast downwards to check if the player is on the ground
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance, groundMask))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
 }

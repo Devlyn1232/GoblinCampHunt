@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7112880188198118665}
   - component: {fileID: 1263348441523330771}
   - component: {fileID: 4712083051103105918}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bush_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4263922822445036487}
   - component: {fileID: 1256791195242761781}
   - component: {fileID: 8400377841618932109}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bush_01
   m_TagString: Nature
   m_Icon: {fileID: 0}
@@ -154,6 +154,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotation: 1
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Nature:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!1 &8284389702184043545
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +173,7 @@ GameObject:
   - component: {fileID: 7688825897537880626}
   - component: {fileID: 577572581637733345}
   - component: {fileID: 5070704394311751669}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bush_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
